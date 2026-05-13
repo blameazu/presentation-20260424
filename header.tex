@@ -1,0 +1,239 @@
+% !TeX root = ./20260524.tex
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\documentclass[UTF8,notheorems,xcolor={dvipsnames}]{beamer}
+\usepackage{silence}
+\WarningsOff[beamerthememetropolis]
+\WarningFilter{beamerthememetropolis}{Could not find Fira Sans fonts}
+\WarningFilter{beamerthememetropolis}{Could not find Fira Mono fonts}
+\usepackage[dvipsnames]{xcolor}
+\usetheme{metropolis}
+\metroset{progressbar=frametitle,sectionpage=none,block=fill,numbering=fraction}
+\usepackage{appendixnumberbeamer}
+\usepackage{amsmath, mathtools, graphicx}
+\usepackage{standalone}
+\usepackage[most]{tcolorbox}
+\usepackage[normalem]{ulem}
+\usepackage{xeCJK}
+\usepackage{fontspec}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,bending,decorations.pathreplacing,external}
+
+\usepackage{pgfplots}
+\usepackage{fontawesome5}
+\usepgfplotslibrary{polar}
+\usepgflibrary{shapes.geometric}
+\usetikzlibrary{calc,angles,quotes,backgrounds}
+\defaultfontfeatures{Ligatures=TeX}
+\usefonttheme{professionalfonts}
+\usepackage[cache=true,cachedir=build/.minted-cache]{minted}
+\usepackage{xstring}
+
+% Metropolis custom color palette (mist blue, slate, restrained teal)
+\definecolor{mPrimary}{HTML}{253746}
+\definecolor{mSecondary}{HTML}{EDF2F7}
+\definecolor{mAccent}{HTML}{2F7E79}
+\definecolor{mMuted}{HTML}{627381}
+\definecolor{mTheorem}{HTML}{1F5C7A}
+\definecolor{mLemma}{HTML}{2F7E79}
+\definecolor{mDefinition}{HTML}{5C6B8A}
+\definecolor{mCorollary}{HTML}{4A7D5F}
+\definecolor{mProperty}{HTML}{4B6A88}
+\definecolor{mProblem}{HTML}{8A5A6B}
+\definecolor{mExercise}{HTML}{6D5A8A}
+\definecolor{mProof}{HTML}{556270}
+% Global beamer colors
+\setbeamercolor{normal text}{fg=mPrimary,bg=white}
+\setbeamercolor{background canvas}{bg=white}
+\setbeamercolor{titlelike}{fg=mPrimary}
+\setbeamercolor{title separator}{fg=mAccent}
+\setbeamercolor{title}{fg=mPrimary}
+\setbeamercolor{subtitle}{fg=mAccent}
+\setbeamercolor{frametitle}{fg=mPrimary,bg=mSecondary!75}
+\setbeamercolor{structure}{fg=mPrimary}
+\setbeamercolor{block title}{fg=white,bg=mPrimary!88}
+\setbeamercolor{block body}{fg=mPrimary,bg=mSecondary!30}
+\setbeamercolor{progress bar}{fg=mAccent,bg=mSecondary!80!black!10}
+\setbeamerfont{section in toc}{series=\bfseries}
+\setbeamercolor{itemize item}{fg=mAccent}
+\setbeamercolor{itemize subitem}{fg=mMuted}
+\setbeamercolor{itemize subsubitem}{fg=mPrimary}
+\setbeamertemplate{itemize item}{\color{mAccent}\small$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{mMuted}\tiny$\bullet$}
+\setbeamertemplate{itemize subsubitem}{\color{mPrimary}\tiny$\bullet$}
+
+\usepackage{multicol}
+
+\newcommand{\cmark}{{\faIcon{check}}}%
+\newcommand{\xmark}{{\faIcon{times}}}%
+
+\newcommand{\CC}[1]{#1}
+
+\newcommand{\Cincluded}{{\small\cmark}}
+\newcommand{\Cdefine}{{\small\cmark\faFile*[regular]}}
+\newcommand{\Ccodeonly}{{\small\cmark\faFile*~}}
+\newcommand{\Cnofocus}{{\small\faQuestion}}
+\newcommand{\Cexmaybe}{{\small\xmark\faQuestionCircle}}
+\newcommand{\Cexcluded}{{\small\xmark}}
+
+\newcommand{\Iincluded}{\item[\hbox to 1.8em{\Cincluded\hfill}]}
+\newcommand{\Idefine}{\item[\hbox to 1.8em{\Cdefine\hfill}]}
+\newcommand{\Icodeonly}{\item[\hbox to 1.8em{\Ccodeonly\hfill}]}
+\newcommand{\Inofocus}{\item[\hbox to 1.8em{\Cnofocus\hfill}]}
+\newcommand{\Iexmaybe}{\item[\hbox to 1.8em{\Cexmaybe\hfill}]}
+\newcommand{\Iexcluded}{\item[\hbox to 1.8em{\Cexcluded\hfill}]}
+
+\DeclareRobustCommand{\rddots}{\text{\reflectbox{$\ddots$}}}
+
+
+\usepackage{graphicx}
+
+\def\codesize{\fontsize{8}{9}\selectfont}
+\IfFontExistsTF{Noto Sans}{
+  \setsansfont{Noto Sans}
+}{
+  \setsansfont{Latin Modern Sans}
+}
+\IfFontExistsTF{Source Code Pro}{
+  \setmonofont[Mapping=]{Source Code Pro}
+}{
+  \setmonofont{Latin Modern Mono}
+}
+\setminted{fontsize=\codesize, linenos, frame=lines, mathescape, autogobble, tabsize=4, bgcolor=mSecondary!15}
+\setCJKmainfont[AutoFakeSlant,BoldFont=Noto Sans CJK TC Bold]{Noto Sans CJK TC}
+\setCJKsansfont[AutoFakeSlant,BoldFont=Noto Sans CJK TC Bold]{Noto Sans CJK TC}
+\IfFontExistsTF{Noto Sans CJK SC}{
+  \setCJKmonofont[AutoFakeSlant,BoldFont=Noto Sans CJK TC Bold]{Noto Sans CJK SC}
+}{
+  \setCJKmonofont[AutoFakeSlant,BoldFont=Noto Sans CJK TC Bold]{Noto Sans CJK TC}
+}
+\tikzset{every picture/.style={line width=0.75pt}}
+\pgfplotsset{compat=1.18}
+\AtBeginDocument{\pgfplotsset{compat=1.18}}
+\AtBeginDocument{\pgfplotsset{compat/show suggested version=false}}
+
+\setlength{\parskip}{\baselineskip}
+\newcommand{\btitle}[1]{{\secname} --- #1}
+\newcommand{\stitle}[1]{{\subsecname} --- #1}
+
+\newcommand{\setdefaultblockcolors}{%
+  \setbeamercolor{block title}{fg=white,bg=mPrimary!88}%
+  \setbeamercolor{block body}{fg=mPrimary,bg=mSecondary!30}%
+}
+\newcommand{\setblockpalette}[2]{%
+  \setbeamercolor{block title}{fg=white,bg=#1}%
+  \setbeamercolor{block body}{fg=mPrimary,bg=#2}%
+}
+\AtBeginDocument{\setdefaultblockcolors}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}
+\newtheorem{lemma}{引理}
+\newtheorem{property}{性質}
+\newtheorem{corollary}{推論}
+\newtheorem{problem}{例題}
+\AtBeginEnvironment{theorem}{\setblockpalette{mTheorem}{mTheorem!12!white}}
+\AtEndEnvironment{theorem}{\setdefaultblockcolors}
+\AtBeginEnvironment{lemma}{\setblockpalette{mLemma}{mLemma!12!white}}
+\AtEndEnvironment{lemma}{\setdefaultblockcolors}
+\AtBeginEnvironment{property}{\setblockpalette{mProperty}{mProperty!12!white}}
+\AtEndEnvironment{property}{\setdefaultblockcolors}
+\AtBeginEnvironment{corollary}{\setblockpalette{mCorollary}{mCorollary!12!white}}
+\AtEndEnvironment{corollary}{\setdefaultblockcolors}
+\AtBeginEnvironment{problem}{\setblockpalette{mProblem}{mProblem!12!white}}
+\AtEndEnvironment{problem}{\setdefaultblockcolors}
+
+\newtheorem{definition}{定義}
+\AtBeginEnvironment{definition}{
+  \setblockpalette{mDefinition}{mDefinition!12!white}
+}
+\AtEndEnvironment{definition}{\setdefaultblockcolors}
+
+\newtheorem{exercise}{習題}
+\AtBeginEnvironment{exercise}{
+  \setblockpalette{mExercise}{mExercise!12!white}
+}
+\AtEndEnvironment{exercise}{\setdefaultblockcolors}
+
+\AtBeginEnvironment{proof}{\setblockpalette{mProof}{mProof!10!white}}
+\AtEndEnvironment{proof}{\setdefaultblockcolors}
+
+% Adaptive section TOC: switch to two columns only when subsection count is large.
+\newcounter{currsecsubcount}
+\newread\fmTocIn
+\newcommand{\toccolthreshold}{6}
+\newcommand{\countcurrsecsubsections}{%
+  \setcounter{currsecsubcount}{0}%
+  \IfFileExists{\jobname.toc}{%
+    \begingroup
+    \edef\fmPatternRaw{subsectionintoc {\number\value{section}}}%
+    \edef\fmPattern{\detokenize\expandafter{\fmPatternRaw}}%
+    \openin\fmTocIn=\jobname.toc
+    \loop\unless\ifeof\fmTocIn
+      \read\fmTocIn to \fmLine
+      \edef\fmLineSafe{\detokenize\expandafter{\fmLine}}%
+      \IfSubStr{\fmLineSafe}{\fmPattern}{\stepcounter{currsecsubcount}}{}
+    \repeat
+    \closein\fmTocIn
+    \endgroup
+  }{}
+}
+
+\AtBeginSection[]{
+  \begin{frame}
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=6pt,center,shadow=true,rounded=true]{title}
+      \usebeamerfont{title}\LARGE\insertsectionhead\par%
+    \end{beamercolorbox}
+    \vfill
+  \end{frame}
+}
+
+\AtBeginSubsection[]{
+  \countcurrsecsubsections
+  \ifnum\value{currsecsubcount}>\toccolthreshold\relax
+    \begin{frame}
+      \begingroup
+      \usebeamerfont{section in toc}\Large\bfseries\insertsectionhead\par
+      \endgroup
+      \begin{multicols}{2}
+        \tableofcontents[sectionstyle=hide/hide,hideothersubsections, subsectionstyle=show/shaded/hide]
+      \end{multicols}
+    \end{frame}
+  \else
+    \begin{frame}
+      \begingroup
+      \usebeamerfont{section in toc}\large\bfseries\insertsectionhead\par
+      \endgroup
+      \tableofcontents[sectionstyle=hide/hide,hideothersubsections, subsectionstyle=show/shaded/hide]
+    \end{frame}
+  \fi
+}
+
+
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+\setlength{\parskip}{\baselineskip}
+
+\usepackage{listings}
+
+\lstset{language=C++,
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    numbers=left,
+    numberstyle=\tiny,
+    frame=single,
+    keywordstyle=\color{mAccent}\ttfamily,
+    stringstyle=\color{mSecondary!70!black}\ttfamily,
+    commentstyle=\color{mMuted}\ttfamily,
+    morecomment=[l][\color{mAccent!80!black}]{\#}
+}
+
+\setbeamertemplate{footline}[frame number]
+
+\setbeamertemplate{navigation symbols}{}
+
+\hypersetup{CJKbookmarks=true}

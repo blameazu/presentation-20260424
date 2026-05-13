@@ -1,0 +1,107 @@
+% !TeX root = ../../20260524.tex
+
+\section{模擬}
+
+\begin{frame}{模擬}
+    模擬的精隨在於盲從
+
+    題目跟你說要做什麼，你就跟著它做什麼\pause
+
+    有點像是題目是你 ICPC 隊友，他已經跟你講要怎麼做了
+
+    你要做的事情就是把這些東西實作出來
+\end{frame}
+
+\begin{frame}{題目}
+    \begin{exercise}[TOJ 1076 打怪遊戲]
+        $n$ 個人在打 BOSS，BOSS 有 $H$ 的血量
+
+        一開始有一個輪流打怪的隊伍順序 $p_1, p_2, \ldots, p_n$
+
+        每次都是隊伍的第一個先攻擊，每次花費 $a_i$ 元，消耗掉 BOSS $a_i$ 的血量
+
+        假如 BOSS 死掉了(血量 $\le 0$)，最後一個攻擊他的人贏，離開隊伍
+
+        然後 BOSS 復活(擁有 $H$ 的血量)，剩下的人繼續攻擊，直到所有人都離開隊伍
+
+        求每個人離開隊伍的先後順序，以及總花費金額
+
+        $1 \le n, h, a_i \le 2000$
+    \end{exercise}
+\end{frame}
+
+\section{枚舉}
+
+\begin{frame}{例題一}
+    \begin{problem}[ABC 214 B - How many?]
+        給 $S$ $T$
+
+        求有多少個非負整數三元組 $(a, b, c)$ 滿足 $a + b + c \le S$ 和 $a \times b \times c \le T$
+
+        $S \le 100$
+
+        $T \le 10^4$
+    \end{problem}
+\end{frame}
+
+\begin{frame}{例題一解答}
+    對於枚舉來說，值域的大小與枚舉的複雜度有關
+
+    那我們不妨分析一下值域大小\pause
+
+    假如我們依照 $a \times b \times c \le T$ 枚舉，然後檢查 $a + b + c$ 是否 $\le S$\pause
+
+    先不考慮 $a, b, c = 0$ 的情況
+
+    $a = i$ 的時候，$b$ 會枚舉 $1$ 到 $\lfloor \frac{T}{i} \rfloor$
+
+    $a = i, b = j$ 時，$c$ 會枚舉 $1$ 到 $\lfloor \frac{T}{i \times j} \rfloor$
+
+    也就是說，總共會枚舉 $\sum^{T}_{i=1} \sum^{\lfloor \frac{T}{i} \rfloor}_{j=1} \lfloor \frac{T}{i \times j} \rfloor$ 次
+\end{frame}
+
+\begin{frame}{例題一解答}
+    對著剛剛的式子亂算，大概會得到 $O(T \log^2 T)$ 的複雜度
+
+    這樣感覺好複雜，而且還要判零的 case\pause
+
+    我們換個枚舉方式，對著 $a + b + c \le S$ 枚舉，檢查 $a \times b \times c \le T$
+
+    $a = i$，$b$ 從 $0 \sim S-i$
+
+    $a = i, b = j$，$c$ 從 $0 \sim S-i-j$
+
+    總枚舉次數 $\sum^{S}_{i=0} \sum^{S-i}_{j=0} (S-i-j+1)$\pause
+
+    複雜度差不多 $O(\binom{S+3}{3}) = O(\frac{S^3}{6})$
+\end{frame}
+
+\begin{frame}{值域差別}
+    發現剛剛有兩種枚舉方式
+
+    且複雜度看起來差別很大，$O(T \log^2 T)$ $O(\frac{S^3}{6})$\pause
+
+    也就是說當 $T$ 變大的時候，對著 $S$ 枚舉會更好
+
+    當 $S$ 變大的時候，對著 $T$ 枚舉會更好
+\end{frame}
+
+\begin{frame}{題目}
+    \begin{exercise}[TOJ 1102 Brain Rot數字 (Easy Version)]
+        求 $1 \sim N$ 之中，有多少個數字的位數和是 $67$ 的倍數
+
+        $1 \le N \le 10^9$
+    \end{exercise}
+
+    \begin{exercise}[TOJ 1111 闇影沒有睿智]
+        給三數 $A$ $B$ $C$
+
+        令數列 $D$ 為滿足 $([A \equiv 0 \pmod{d}] + [B \equiv 0 \pmod{d}] + [C \equiv 0 \pmod{d}] \ge 2)$ 之數字組成，由小到大
+
+        求 $D_k$
+
+        $1 \le A, B, C \le 1000$
+
+        $1 \le k \le 3 \times 10^6$
+    \end{exercise}
+\end{frame}

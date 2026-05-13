@@ -1,0 +1,67 @@
+% !TeX root = ../../20260524.tex
+
+\section{優化}
+
+\subsection{剪枝}
+
+\begin{frame}{例題一}
+    \begin{problem}[TOJ 657 八皇后問題]
+        $8 \times 8$ 的棋盤上要放八隻皇后，有些位置不能放皇后
+
+        問有多少種放法可以放下八隻皇后，並且彼此攻擊不到彼此
+    \end{problem}
+\end{frame}
+
+\begin{frame}{例題一解答}
+    發現總共有 $64 \times (64-1) \times \cdots \times (64-7)$ 種放置方法
+
+    這樣太多了，有更好的枚舉方法嗎?\pause
+
+    我們發現有些放法其實根本不可能放得下
+
+    對於兩隻皇后來講，只要他們所在行跟所在列相同，那一定是不合法的放置方法
+
+    所以我們每次都枚舉每一列的皇后要放在哪一行，並且第 $i$ 列的皇后不能與 $1 \sim i-1$ 列的皇后同一行
+
+    這樣複雜度就被壓到 $O(8! \times \text{ 檢查斜線時間})$
+\end{frame}
+
+\begin{frame}{題目}
+    \begin{exercise}[CSES 1625 Grid Path Description]
+        有一個 $7 \times 7$ 的格子，要從左上走到左下，且將所有格子都走過(不重複走)
+
+        那麼路徑長度一定是 $48$
+
+        今天給你長度為 $48$ 的字串，包含 (L, R, U, D, ?)
+
+        你可以將 ? 視為任意方向，問有多少個走法符合字串的走法，且可以從左上走到左下，並且將所有格子都走過
+    \end{exercise}
+\end{frame}
+
+\subsection{Meet in the Middle}
+
+\begin{frame}{例題二}
+    \begin{problem}[CSES 1628 Meet in the Middle]
+        有 $n$ 個元素 $t_i$
+
+        問有多少個子集合總和是 $x$
+
+        $1 \le n \le 40$
+    \end{problem}
+\end{frame}
+
+\begin{frame}{例題二解答}
+    枚舉子集合的做法，$O(2^n) = O(2^{40})$，爆掉了
+
+    有沒有更快的做法?\pause
+
+    發現枚舉前 $1 \sim \lfloor \frac{n}{2} \rfloor$ 個子集合
+
+    將每個子集合的總和記錄下來
+
+    再枚舉 $\lfloor \frac{n}{2} \rfloor \sim n$ 的子集合
+
+    這樣右邊子集合的總和 $a$ 可以用二分搜找到左邊的子集合是否存在總合為 $k-a$ 的\pause
+
+    時間複雜度降到 $2^{\lfloor \frac{n}{2} \rfloor} \times \log (\lfloor \frac{n}{2} \rfloor)$
+\end{frame}

@@ -1,0 +1,149 @@
+% !TeX root = ../../20260524.tex
+\section{Introduction}
+
+\begin{frame}{什麼是時間複雜度}
+    時間複雜度 (Time Complexity)
+
+    是一種評估程式可以跑多快的數學表示法\pause
+
+    在競賽中，程式跑的多快可以決定拿到的分數
+\end{frame}
+
+\begin{frame}{漸進符號}
+    要表示複雜度的話，我們需要用到 \textbf{漸進符號} 來表示
+
+    最常見的漸進符號是 $O$\pause
+
+    數學的定義是這樣子
+
+    \begin{definition}[$O$]
+        $f(n) = O(g(n)) \Leftrightarrow \exists \space n_0, c > 0, \text{ such that } \forall n \ge n_0, f(n) \le c \cdot g(n)$
+    \end{definition}\pause
+
+    簡單來講是這樣
+
+    \begin{definition}[$O$]
+        $O(g(n))$ 用來代表一個算法的最糟上界量級差不多 $g(n)$
+    \end{definition}
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+    舉個例子
+
+\begin{lstlisting}
+for(int i = 1; i <= n; i++) {
+    cout << i << ' ';
+}
+\end{lstlisting}
+
+這份 code 會跑 $n$ 次
+
+所以時間複雜度是 $O(n)$
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+\begin{lstlisting}
+int cnt = 0;
+for(int i = 1; i <= n; i++) {
+    int a; cin >> a;
+    if(a == 67) {
+        break;
+    }
+    cnt++;
+}
+cout << cnt << '\n';
+\end{lstlisting}\pause
+
+雖然 $a_1 = 67$ 有可能達到 $O(1)$，但是最糟是 $a_i \neq 67$
+
+需要跑 $n$ 次，所以時間複雜度是 $O(n)$
+\end{frame}
+
+\begin{frame}{$O$ 表示法}
+    而對於 $O$ 的表示法來講，大概有幾個規則
+
+    \begin{property}[忽略常數]
+        $O$ 裡面只放變數，常數通常省略
+
+        也就是說 $O(5 N) = O(67 N) = O(\frac{1}{67} N) = O(N)$
+    \end{property}\pause
+
+    \begin{property}[忽略成長較慢項]
+        對於同一種變數構成的項次，隨著變數增長，成長較慢的項次將被忽略
+
+        舉例來說就是，$O(N^2 + N) = O(N^2)$
+    \end{property}
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+\begin{lstlisting}
+int n, m; cin >> n >> m;
+vector<int> A(n), B(m);
+for(int i = 0; i < n; i++) cin >> A[i];
+for(int j = 0; j < m; j++) cin >> B[j];
+\end{lstlisting}
+
+時間複雜度 $O(n + m)$
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+\begin{lstlisting}
+int mx = 0;
+for(int i = 0; i < n; i++) {
+    mx = max(mx, A[i]);
+}
+int mn = 67;
+for(int i = n-1; i >= 0; i--) {
+    mn = min(mn, A[i]);
+}
+\end{lstlisting}
+
+時間複雜度 $O(n)$
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+\begin{lstlisting}
+int n; cin >> n;
+vector<int> A(n);
+for(int i = 0; i < n; i++) cin >> A[i];
+int ans = 0;
+for(int i = 0; i < n; i++) {
+    for(int j = 0; j < n; j++) {
+        ans += A[i] * A[j];
+    }
+}
+cout << ans << '\n';
+\end{lstlisting}
+
+時間複雜度 $O(n^2)$
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+\begin{lstlisting}
+int AA_sum = 0, BB_sum = 0;
+for(int i = 0; i < n; i++) {
+    for(int j = 0; j < n; j++) {
+        AA_sum += A[i] * A[j];
+    }
+    for(int k = 0; k < m; k++) {
+        BB_sum += A[i] * B[k];
+    }
+}
+\end{lstlisting}
+
+時間複雜度 $O(n^2 + nm)$
+\end{frame}
+
+\begin{frame}{其他漸進符號}
+    \begin{definition}[$\Theta$]
+        $f(n) = \Theta(g(n)) \Leftrightarrow \exists n_0, c_1, c_2 > 0 \text{ such that } \forall n \ge n_0, c_1 \cdot g(n) \le f(n) \le c_2 \cdot g(n)$
+    \end{definition}
+
+    \begin{definition}[$\Omega$]
+        $f(n) = \Omega(g(n)) \leftrightarrow \exists n_0, c > 0 \text{ such that } \forall n \ge n_0, c \cdot g(n) \le f(n)$
+    \end{definition}
+
+    \begin{definition}[$\omega$]
+        $f(n) = \omega(g(n)) \leftrightarrow \exists n_0, c > 0 \text{ such that } \forall n \ge n_0, c \cdot g(n) < f(n)$
+    \end{definition}
+\end{frame}

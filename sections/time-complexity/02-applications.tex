@@ -1,0 +1,80 @@
+% !TeX root = ../../20260524.tex
+\section{Applications}
+
+\subsection{常見複雜度}
+
+\begin{frame}{常見複雜度}
+    學會計算複雜度後
+    
+    我們可以透過觀察題目給的範圍去判斷跑的跑不動\pause
+
+    對於現代機器來講，通常 1s 可以跑 $5 \times 10^8$ 左右
+\end{frame}
+
+\begin{frame}{常見複雜度}
+    \begin{itemize}
+        \item $N \le 10^{18}$ : $O(\log{N})$\pause
+        \item $N \le 10^8$ : $O(N)$\pause
+        \item $N \le 10^6$ : $O(N \log{N})$\pause
+        \item $N \le 10^5$ : $O(N \sqrt{N})$\pause
+        \item $N \le 10^3$ : $O(N^2)$\pause
+        \item $N \le 500$ : $O(N^3)$\pause
+        \item $N \le 100$ : $O(N^4)$\pause
+        \item $N \le 20$ : $O(2^N)$\pause
+        \item $N \le 8$ : $O(N!)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{跑的跑不動?}
+    要背上面的表嗎?\pause
+
+    忘記的話，我比賽現場要怎麼知道會過?\pause
+
+    把數字代進去。
+\end{frame}
+
+\subsection{級數複雜度}
+
+\begin{frame}{級數複雜度}
+    當然，世界不是那麼美好的
+
+    有時候有些時間複雜度有點難分析\pause
+
+    $O(1) + O(1) + O(2) + \cdots + O(N)$?\pause
+
+    等差級數
+
+    $\displaystyle O(\frac{(1 + N) \times N}{2}) = O(N^2)$
+\end{frame}
+
+\begin{frame}{級數複雜度}
+    $O(1) + O(2) + O(4) + \cdots + O(2^N)$?\pause
+
+    等比級數
+
+    $\displaystyle O(\frac{2^{N+1}-1}{1}) = O(2^N)$
+\end{frame}
+
+\begin{frame}{級數複雜度}
+    $O(N) + O(\frac{1}{2}N) + O(\frac{1}{3}N) + \cdots + O(\frac{1}{N}N)$?\pause
+
+    $O(N \log{N})$\pause
+
+    $O(N) + O(\frac{1}{2}N) + O(\frac{1}{4}N + \cdots + O(\frac{1}{2^k}N)), 2^k \le N$?\pause
+
+    $O(N)$
+\end{frame}
+
+\subsection{常數}
+
+\begin{frame}{常數}
+    時間複雜度常常忽略常數
+
+    是因為常數往往影響很小，在變數的快增長下顯得不重要\pause
+
+    但是有時候，常數也可能導致 TLE 
+
+    像是 $O(N\log{N})$ 的複雜度可以過
+
+    但是你外面帶個常數 $67$，就倒了。
+\end{frame}
